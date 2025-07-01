@@ -1,0 +1,480 @@
+/* --- Basic Setup & Variables --- */
+:root {
+    --primary-blue: #007AFF;
+    --primary-orange: #FF9500;
+    --primary-green: #34C759;
+    --background-color: #F0F2F5; /* A slightly cooler background gray */
+    --card-background: #FFFFFF;
+    --text-primary: #1C1C1E;
+    --text-secondary: #8A8A8E;
+    --font-family: 'Poppins', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-primary);
+    /* NEW: Add padding to the top to push content down below the fixed header */
+    /* Header height (73px) + some margin (2rem) */
+    padding-top: calc(73px + 2rem); 
+}
+
+button, a {
+    cursor: pointer;
+    font-family: var(--font-family);
+    text-decoration: none;
+    color: inherit;
+}
+
+/* --- Main App Layout --- 
+.app-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 3rem auto;
+    background-color: #fcfdff;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+} */
+
+/* --- Main App Layout --- */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    background-color: var(--card-background);
+    border-bottom: 1px solid #EBECF0;
+    
+    /* --- NEW: These styles make the header fixed --- */
+    position: fixed; /* Fix the header to the viewport */
+    top: 0;          /* Position it at the very top */
+    left: 0;         /* Stretch it from left... */
+    right: 0;        /* ...to right */
+    z-index: 1000;   /* Ensure it stays on top of other content */
+    height: 73px;    /* Define a fixed height */
+}
+
+/* --- UPDATED Content Box Styles --- */
+.content-container {
+    width: 100%;
+    max-width: 1100px;
+    /* REMOVED: 'margin-top' is no longer needed because of body padding */
+    margin: 0 auto 2rem auto; /* top, right/left, bottom, right/left */
+    background-color: var(--card-background);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    position: relative; 
+    padding-bottom: 80px;
+}
+.header-left { display: flex; align-items: center; gap: 12px; }
+.logo-placeholder { width: 36px; height: 36px; background-color: #e0e5ec; border-radius: 8px; }
+.app-header h1 { font-size: 22px; font-weight: 700; }
+.header-right { position: relative; }
+.menu-button { background: none; border: none; padding: 8px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.menu-button:hover { background-color: #f0f0f0; }
+.menu-button svg { fill: var(--text-primary); }
+.dropdown-menu { position: absolute; top: calc(100% + 8px); right: 0; background-color: var(--card-background); border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); border: 1px solid #EBECF0; width: 180px; z-index: 1000; overflow: hidden; display: flex; flex-direction: column; }
+.dropdown-item { padding: 12px 16px; font-size: 15px; font-weight: 500; background: none; border: none; text-align: left; width: 100%; text-decoration: none; color: var(--text-primary); }
+.dropdown-item:hover { background-color: #f7f7f7; }
+.dropdown-item.logout { color: #FF3B30; border-top: 1px solid #EBECF0; }
+
+/* --- NEW Centered Content Box --- */
+.content-container {
+    width: 100%;
+    max-width: 960px; /* Make the box wider */
+    margin: 2rem auto; /* Centers the box and adds space from the header/footer */
+    background-color: var(--card-background);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    position: relative; /* For the FAB */
+    padding-bottom: 80px; /* Space for the FAB */
+}
+.app-main {
+    padding: 20px 30px;
+}
+
+/* --- HomePage: Welcome Header --- */
+.welcome-header {
+    margin-bottom: 28px;
+}
+.welcome-header h2 {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+.welcome-header p {
+    font-size: 18px;
+    color: var(--text-secondary);
+}
+
+/* --- HomePage: Quick Actions --- */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.action-card {
+    background-color: var(--card-background);
+    border-radius: 20px;
+    padding: 24px 16px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+    border: 1px solid #F0F0F0;
+}
+.action-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+}
+.action-card .icon-bg {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px; /* Squircle shape */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 16px;
+}
+.icon-bg.blue { background-color: #E5F2FF; color: #005ECC; }
+.icon-bg.orange { background-color: #FFF4E5; color: #E68A00; }
+.icon-bg.green { background-color: #E3F8E9; color: #1E7B3A; }
+.action-card svg, .action-card img {
+    width: 28px;
+    height: 28px;
+}
+
+/* --- HomePage: Recent Activity --- */
+.recent-activity {
+    margin-top: 40px;
+}
+.recent-activity h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.activity-card {
+    display: flex;
+    align-items: center;
+    background-color: var(--card-background);
+    padding: 14px;
+    border-radius: 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+    border: 1px solid #F0F0F0;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+.activity-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+.activity-card .icon-container {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 16px;
+    flex-shrink: 0;
+    background-color: #E5F2FF;
+}
+.activity-card .icon-container img {
+    width: 26px;
+    height: 26px;
+}
+.activity-card-text h4 {
+    font-size: 16px;
+    font-weight: 600;
+}
+.activity-card-text p {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* --- HomePage: Floating Action Button (FAB) --- */
+/* Find this rule and ensure 'border: none' is present */
+.fab {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary-blue);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    box-shadow: 0 8px 20px rgba(0, 122, 255, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none; /* <-- THIS REMOVES THE BORDER */
+    cursor: pointer;
+}
+.fab:hover {
+    transform: scale(1.08) rotate(90deg);
+    box-shadow: 0 12px 25px rgba(0, 122, 255, 0.4);
+}
+
+
+/* --- NEW: CUSTOM MODAL STYLES --- */
+/* This is the dark, semi-transparent background */
+.modal-overlay {
+    position: fixed; /* Cover the entire screen */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Black with 60% opacity */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Make sure it's on top of everything */
+}
+
+/* This is the white popup container in the middle */
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 500px; /* Control the max width of the modal */
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.modal-close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1;
+    color: #000;
+    opacity: 0.5;
+    cursor: pointer;
+}
+.modal-close-button:hover {
+    opacity: 1;
+}
+
+/* Styles for the form inside the modal */
+.modal-form-group {
+    margin-bottom: 1rem;
+}
+.modal-form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+.modal-form-group input,
+.modal-form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+.modal-form-group textarea {
+    resize: vertical;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    border-top: 1px solid #dee2e6;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+.modal-footer button {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+}
+.modal-footer .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+.modal-footer .btn-primary {
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+/* --- Login Page Styles --- */
+.login-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4rem 2rem; min-height: 60vh; }
+.login-card { background-color: var(--card-background); padding: 2.5rem; border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); border: 1px solid #EBECF0; max-width: 450px; width: 100%; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.login-card .logo-placeholder.large { width: 60px; height: 60px; border-radius: 12px; margin-bottom: 0.5rem; }
+.login-card h2 { font-size: 24px; font-weight: 700; }
+.login-card p { color: var(--text-secondary); max-width: 320px; line-height: 1.5; margin-bottom: 1rem; }
+.google-signin-button { display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 24px; border: 1px solid #DADCE0; border-radius: 8px; background-color: #FFFFFF; font-size: 16px; font-weight: 600; color: #3C4043; transition: background-color 0.2s ease; }
+.google-signin-button:hover { background-color: #F8F9FA; border-color: #C6C9CE; }
+.google-signin-button .google-icon { width: 20px; height: 20px; }
+
+
+/* --- Inner Page Styles (Tabs, Search, Cards) --- */
+.page-header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+}
+.tabs { display: flex; gap: 12px; margin-bottom: 24px; }
+.tabs button { flex-grow: 1; padding: 10px; font-size: 14px; font-weight: 600; border: 2px solid #e0e0e0; background-color: transparent; border-radius: 12px; transition: all 0.2s ease; color: var(--text-secondary); }
+.tabs button.active { background-color: var(--primary-blue); color: white; border-color: var(--primary-blue); }
+
+.search-container { margin-bottom: 24px; position: relative; }
+.search-container input { width: 100%; height: 48px; padding: 0 16px 0 40px; border-radius: 12px; border: 2px solid #e0e0e0; font-size: 14px; transition: border-color 0.2s ease; }
+.search-container input:focus { outline: none; border-color: var(--primary-blue); }
+.search-container::before { content: '🔍'; position: absolute; left: 15px; top: 13px; font-size: 16px; }
+
+/* --- Lost & Found Page Card Styles --- */
+.item-list-container {
+    margin-top: 24px;
+}
+.lost-found-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background-color: var(--card-background); /* Re-adding this for card background */
+    padding: 16px;
+    border-radius: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eef0f2;
+}
+.reporter-avatar-placeholder { /* UPDATED from .reporter-avatar */
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 4px;
+    background-color: #e0e5ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8A8A8E;
+}
+.item-card .item-details { flex-grow: 1; }
+.item-details .item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+.item-details .item-header h4 { font-size: 16px; font-weight: 600; }
+.status-tag { font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 6px; color: white; text-transform: uppercase; }
+.status-lost { background-color: #FF3B30; }
+.status-found { background-color: #34C759; }
+.item-details .item-meta { font-size: 14px; line-height: 1.5; margin-top: 8px; }
+.item-details .posted-by-meta { font-size: 12px; color: var(--text-secondary); border-top: 1px solid #f0f2f5; padding-top: 8px; margin-top: 12px; }
+.item-details .found-by-meta { font-weight: 600; color: var(--primary-green); background-color: #e3f8e9; padding: 4px 8px; border-radius: 6px; display: inline-block; margin-top: 8px; font-size: 13px; }
+
+/* --- Notes Hub Page Styles --- */
+.note-card-v2 { display: flex; flex-direction: column; gap: 12px; background-color: var(--card-background); padding: 16px; border-radius: 16px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e0e0e0; }
+.note-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.note-header-info h4 { font-size: 16px; font-weight: 600; line-height: 1.2; }
+.note-header-info p { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+.format-tag { font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 6px; color: white; text-transform: uppercase; flex-shrink: 0; }
+.format-online { background-color: var(--primary-green); }
+.format-inperson { background-color: var(--primary-blue); }
+.format-pyq { background-color: var(--primary-orange); }
+.note-body { font-size: 14px; line-height: 1.4; }
+.note-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f0f0f0; padding-top: 12px; margin-top: 4px; }
+.note-uploader { font-size: 12px; color: var(--text-secondary); }
+.note-price { font-size: 16px; font-weight: 700; color: var(--primary-blue); }
+
+/* --- Borrow & Lend Page Styles --- */
+.item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+.item-card-borrow { background-color: var(--card-background); border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #e0e0e0; display: flex; flex-direction: column; }
+.item-card-borrow .item-image { height: 150px; background-color: #f0f0f0; display: flex; justify-content: center; align-items: center; font-size: 14px; color: var(--text-secondary); }
+.item-card-borrow .item-info-borrow { padding: 16px; display: flex; flex-direction: column; flex-grow: 1; }
+.item-info-borrow .item-title { font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item-info-borrow .posted-by { font-size: 12px; color: var(--text-secondary); margin-top: 2px; margin-bottom: 8px; }
+.pricing-info { display: flex; justify-content: space-around; align-items: center; margin-top: auto; border-top: 1px solid #f0f0f0; padding-top: 12px; }
+.price-box { text-align: center; }
+.price-box .label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; font-weight: 600; }
+.price-box .amount { font-size: 16px; font-weight: 700; color: var(--primary-green); }
+.price-box:last-child .amount { color: var(--primary-blue); }
+
+/* --- Add these to the end of index.css --- */
+
+.item-card.lost-found-card {
+    gap: 20px; /* Increase gap between image and text */
+}
+
+.item-card-left {
+    flex-shrink: 0;
+}
+
+.item-card-right {
+    flex-grow: 1;
+}
+
+.item-image-preview {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    object-fit: cover;
+    background-color: #f0f2f5;
+}
+
+.item-image-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    background-color: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #c0c5ce;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f0f2f5;
+    padding-top: 8px;
+    margin-top: 12px;
+}
+
+.item-details .posted-by-meta {
+    border-top: none; /* Remove border from here as it's now in card-footer */
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.thank-you-meta {
+    font-style: italic;
+    background-color: #f8f9fa;
+    border-left: 3px solid var(--primary-blue);
+    padding: 8px 12px;
+    margin-top: 8px;
+    border-radius: 4px;
+}
